@@ -5,8 +5,9 @@ from pathlib import Path
 from typing import List, Dict, TextIO
 
 class FecProcessor(ABC):
-    def __init__(self, filename: Path):
+    def __init__(self, filename: Path, start_page: int):
         self.filename = filename
+        self.start_page = start_page
 
     @abstractmethod
     def start_processing(self) -> Path:
@@ -21,6 +22,4 @@ class FecProcessor(ABC):
         ...
     
     def write_file_to_json(self, records: List[Dict], file: TextIO) -> None:
-        line_to_writes = [json.dumps(record) for record in records]
-        for line in line_to_writes:
-            file.write(f"{line}\n") 
+        file.write(json.dumps(records)) 
